@@ -1,4 +1,5 @@
 ﻿using GymManagmentDAL.Data.Context;
+using GymManagmentDAL.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace GymManagmentDAL.DataSeed
                 if (HasPlans && HasCategories) return false;
                 if (!HasPlans)
                 {
-                    var plans = LoadDataFromJasonFile<Entites.Plan>("Plans.json");
+                    var plans = LoadDataFromJasonFile<Plan>("plans.json");
 
                     if (plans.Any())
                     {
@@ -31,7 +32,7 @@ namespace GymManagmentDAL.DataSeed
 
                 if (!HasCategories)
                 {
-                    var categories = LoadDataFromJasonFile<Entites.Category>("Categories.json");
+                    var categories = LoadDataFromJasonFile<Category>("categories.json");
 
                     if (categories.Any())
                     {

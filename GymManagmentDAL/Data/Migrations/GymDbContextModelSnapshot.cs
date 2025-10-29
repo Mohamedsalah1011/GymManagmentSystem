@@ -30,13 +30,13 @@ namespace GymManagmentDAL.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -55,7 +55,7 @@ namespace GymManagmentDAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Hight")
+                    b.Property<decimal>("Height")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Note")
@@ -190,7 +190,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.ToTable("MemberShips");
                 });
 
-            modelBuilder.Entity("GymManagmentDAL.Entites.Plane", b =>
+            modelBuilder.Entity("GymManagmentDAL.Entites.Plan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -409,7 +409,7 @@ namespace GymManagmentDAL.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GymManagmentDAL.Entites.Plane", "Plane")
+                    b.HasOne("GymManagmentDAL.Entites.Plan", "Plane")
                         .WithMany("PlanMember")
                         .HasForeignKey("PlaneId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -489,7 +489,7 @@ namespace GymManagmentDAL.Data.Migrations
                     b.Navigation("MemberShips");
                 });
 
-            modelBuilder.Entity("GymManagmentDAL.Entites.Plane", b =>
+            modelBuilder.Entity("GymManagmentDAL.Entites.Plan", b =>
                 {
                     b.Navigation("PlanMember");
                 });

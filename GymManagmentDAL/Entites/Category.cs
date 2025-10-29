@@ -8,8 +8,8 @@ namespace GymManagmentDAL.Entites
 {
     public class Category : BaseEntity
     {
-        public string Name { get; set; } = null!;
+        public string CategoryName { get; set; } = null!;
 
-        public ICollection<Session> Sessions { get; set; }
+        public ICollection<Session> Sessions { get; set; } = null!;
     }
 }
