@@ -1,26 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GymManagmentBLL.Services.interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagmentPL.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAnalyticsService _analyticsService;
+
         //Actions
         //BaseUrl/Home/Index
+        public HomeController(IAnalyticsService analyticsService)
+        {
+            _analyticsService = analyticsService;
+        }
         public ViewResult Index()
         {
-          
-            return View();
+            var Data = _analyticsService.GetAnalyticsData();
+
+            return View(Data);
         }
 
-        public JsonResult Trainers() 
-        {
-            var trainers = new[]
-            {
-                new { Name = "John Doe", Specialty = "Strength Training" },
-                new { Name = "Jane Smith", Specialty = "Yoga" },
-                new { Name = "Mike Johnson", Specialty = "Cardio" }
-            };
-            return Json(trainers);
-        }
+        
     }
 }
