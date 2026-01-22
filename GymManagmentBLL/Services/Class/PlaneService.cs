@@ -1,4 +1,5 @@
-﻿using GymManagmentBLL.Services.interfaces;
+﻿using AutoMapper;
+using GymManagmentBLL.Services.interfaces;
 using GymManagmentBLL.ViewModels.PlanViewModel;
 using GymManagmentDAL.Entites;
 using GymManagmentDAL.Repositories.Interfaces;
@@ -12,9 +13,11 @@ namespace GymManagmentBLL.Services.Class
 {
     internal class PlaneService : IPlanService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public PlaneService(IUnitOfWork unitOfWork)
+        public PlaneService(IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
         public IEnumerable<PlaneViewModel> GetAllPlans()
@@ -22,30 +25,16 @@ namespace GymManagmentBLL.Services.Class
            var Plans = _unitOfWork.GetRepository<Plan>().GetAll();
             if (Plans == null || !Plans.Any()) return [];
          
-            return Plans.Select(x => new PlaneViewModel
-            {
-                ID = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                DurationDays = x.DurationDays,
-                Price = x.Price,
-                IsActive = x.IsActive
-            });
+            return _mapper.Map<IEnumerable<Plan>, IEnumerable<PlaneViewModel>>(Plans);
+
         }
 
         public PlaneViewModel? GetPlanDetials(int PlanId)
         {
             var plan = _unitOfWork.GetRepository<Plan>().GetById(PlanId);   
             if (plan == null) return null;
-            return new PlaneViewModel
-            {
-                ID = plan.Id,
-                Name = plan.Name,
-                Description = plan.Description,
-                DurationDays = plan.DurationDays,
-                Price = plan.Price,
-                IsActive = plan.IsActive
-            };
+            return _mapper.Map<Plan, PlaneViewModel>(plan);
+
         }
 
         public UpdatePlanViewModel? GetPlanToUpdate(int PlanId)
@@ -53,13 +42,8 @@ namespace GymManagmentBLL.Services.Class
            var plan = _unitOfWork.GetRepository<Plan>().GetById(PlanId);
             if (plan is null || plan.IsActive == false || HasActiveMemberShip(PlanId)) return null;
          
-            return new UpdatePlanViewModel
-            {
-                PlanName = plan.Name,
-                Description = plan.Description,
-                DurationDays = plan.DurationDays,
-                Price = plan.Price
-            };
+            return _mapper.Map<Plan, UpdatePlanViewModel>(plan);
+
         }
 
         public bool UpdatePlanDetials(int PlanId, UpdatePlanViewModel UpdatedPlan)
