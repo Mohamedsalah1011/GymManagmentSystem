@@ -1,0 +1,126 @@
+@model CreatTrainerViewModel
+@{
+    ViewData["Title"] = "Create Trainers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm p-4 rounded-3">
+                <div class="mb-4">
+                    <h2 class="fw-bold text-dark text-primary-color">Add Trainer</h2>
+                </div>
+
+                <form method="post" asp-action="CreateTrainer">
+                    
+                    <!-- Personal Information -->
+                    <h5 class="text-primary fw-bold mb-3">Personal Information</h5>
+                    <hr class="mb-4">
+
+                    <div class="row g-3 mb-4">
+                        <!-- Name -->
+                        <div class="col-md-6">
+                            <label asp-for="Name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter full name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <input asp-for="Phone" class="form-control" placeholder="Enter phone number" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+
+                        <!-- Date Of Birth -->
+                        <div class="col-md-6">
+                            <label asp-for="DateOfBirth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-md-6">
+                            <label asp-for="Gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GymManagmentDAL.Entites.Enums.Gender>()" class="form-select">
+                                <option value="">-- Select Gender --</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <h5 class="text-primary fw-bold mb-3">Address Information</h5>
+                    <hr class="mb-4">
+
+                    <div class="row g-3 mb-4">
+                        <!-- Building Number -->
+                        <div class="col-md-6">
+                            <label asp-for="BuildingNumber" class="form-label">Building Number <span class="text-danger">*</span></label>
+                            <input asp-for="BuildingNumber" class="form-control" />
+                            <span asp-validation-for="BuildingNumber" class="text-danger"></span>
+                        </div>
+
+                        <!-- City -->
+                        <div class="col-md-6">
+                            <label asp-for="City" class="form-label">City <span class="text-danger">*</span></label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+
+                        <!-- Street -->
+                        <div class="col-md-12">
+                            <label asp-for="Street" class="form-label">Street <span class="text-danger">*</span></label>
+                            <input asp-for="Street" class="form-control" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Professional Information -->
+                    <h5 class="text-primary fw-bold mb-3">Professional Information</h5>
+                    <hr class="mb-4">
+
+                    <div class="row g-3 mb-4">
+                        <!-- Specialty / Specialties -->
+                        <div class="col-md-6">
+                            <label asp-for="Specialty" class="form-label">Specialty <span class="text-danger">*</span></label>
+                            <select asp-for="Specialty" asp-items="Html.GetEnumSelectList<GymManagmentDAL.Entites.Enums.Specialties>()" class="form-select">
+                                <option value="">-- Select Specialty --</option>
+                            </select>
+                            <span asp-validation-for="Specialty" class="text-danger"></span>
+                        </div>
+
+                        <!-- Hire Date -->
+                        <div class="col-md-6">
+                            <label asp-for="HireDate" class="form-label">Hire Date</label>
+                            <input asp-for="HireDate" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="HireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2" style="border-color: #0b0099; color: #0b0099;">
+                            <i class="bi bi-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn text-white px-4 py-2" style="background-color: #0b0099;">
+                            <i class="bi bi-check2 me-1"></i> Add Trainer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

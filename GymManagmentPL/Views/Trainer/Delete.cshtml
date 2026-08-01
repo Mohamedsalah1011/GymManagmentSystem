@@ -1,0 +1,31 @@
+@model TrainerViewModel
+@{
+    ViewData["Title"] = "Delete Trainers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 rounded-3 text-center">
+                <h3 class="text-primary-color fw-bold mb-4" style="color: #0b0099;">Are you sure you want to delete this Trainer?</h3>
+
+                <div class="alert alert-warning text-start border-0 py-3 px-4 mb-4" style="background-color: #fff3cd; color: #664d03; border-radius: 8px;">
+                    <strong>Warning!</strong> This action cannot be undone. All Trainer data will be permanently deleted.
+                </div>
+
+                <form method="post" asp-action="DeleteConfirmed">
+                    <input type="hidden" name="id" value="@ViewBag.TrainerId" readonly />
+                    
+                    <div class="d-flex justify-content-between gap-3 mt-4">
+                        <a asp-controller="Trainer" asp-action="Index" class="btn btn-outline-primary w-50 py-3 fw-bold rounded-3" style="border-color: #0b0099; color: #0b0099;">
+                            NO
+                        </a>
+                        <button type="submit" class="btn w-50 py-3 fw-bold rounded-3 text-white" style="background-color: #0b0099;">
+                            Yes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

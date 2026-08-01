@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using GymManagmentBLL.Services.interfaces;
 using GymManagmentBLL.ViewModels.TrainerViewModel;
 using GymManagmentDAL.Entites;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymManagmentBLL.Services.Class
 {
-    internal class TrainerService : ITrainerService
+    public class TrainerService : ITrainerService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -64,7 +64,7 @@ namespace GymManagmentBLL.Services.Class
             
             try
             {
-                if (IsEmailExists(TrainerToUpdate.Email) || IsPhoneExists(TrainerToUpdate.Phone)) return false;
+                if (IsEmailExists(TrainerToUpdate.Email, Id) || IsPhoneExists(TrainerToUpdate.Phone, Id)) return false;
                 var trainerrepo = _unitOfWork.GetRepository<Trainer>();
                 var trainer = trainerrepo.GetById(Id);
                 if (trainer is null) return false;
@@ -99,11 +99,19 @@ namespace GymManagmentBLL.Services.Class
         #region Helper Method
         private bool IsEmailExists(string email)
         {
-            return _unitOfWork.GetRepository<Member>().GetAll(m => m.Email == email).Any();
+            return _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Email == email).Any();
+        }
+        private bool IsEmailExists(string email, int excludeId)
+        {
+            return _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Email == email && m.Id != excludeId).Any();
         }
         private bool IsPhoneExists(string phone)
         {
-            return _unitOfWork.GetRepository<Member>().GetAll(m => m.Phone == phone).Any();
+            return _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Phone == phone).Any();
+        }
+        private bool IsPhoneExists(string phone, int excludeId)
+        {
+            return _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Phone == phone && m.Id != excludeId).Any();
         }
         private bool HasActiveSession(int TrainerId)
         {

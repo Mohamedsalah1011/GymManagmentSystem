@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymManagmentBLL.ViewModels.PlanViewModel
 {
-    internal class UpdatePlanViewModel
+    public class UpdatePlanViewModel
     {
         public string PlanName { get; set; } = null!;
         [Required(ErrorMessage = "Description Is Required")]

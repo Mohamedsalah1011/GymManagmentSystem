@@ -1,4 +1,4 @@
-﻿using GymManagmentDAL.Data.Context;
+using GymManagmentDAL.Data.Context;
 using GymManagmentDAL.Entites;
 using GymManagmentDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +20,15 @@ namespace GymManagmentDAL.Repositories.Class
         public void Add(TEntity entity) => _dbontext.Set<TEntity>().Add(entity);
 
 
-        public void Delete(int id) => _dbontext.Set<TEntity>().Remove(new TEntity { Id = id });
+        public void Delete(int id)
+        {
+            var entity = _dbontext.Set<TEntity>().Local.FirstOrDefault(e => e.Id == id);
+            if (entity == null)
+            {
+                entity = new TEntity { Id = id };
+            }
+            _dbontext.Set<TEntity>().Remove(entity);
+        }
 
 
 

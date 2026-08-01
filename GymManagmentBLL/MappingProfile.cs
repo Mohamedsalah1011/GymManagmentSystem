@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using GymManagmentBLL.ViewModels.MemberViewModel;
 using GymManagmentBLL.ViewModels.PlanViewModel;
 using GymManagmentBLL.ViewModels.SessionViewModel;
@@ -31,15 +31,23 @@ namespace GymManagmentBLL
                     BuildingNumber = src.BuildingNumber,
                     Street = src.Street,
                     City = src.City
-                }));
-            CreateMap<Trainer, TrainerViewModel>();
+                }))
+                .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.Specialty));
+
+            CreateMap<Trainer, TrainerViewModel>()
+                .ForMember(dest => dest.Specialty, opt => opt.MapFrom(src => src.Specialties.ToString()))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirtih.ToShortDateString()));
+                
             CreateMap<Trainer, TrainerToUpdateViewModel>()
                 .ForMember(dist => dist.Street, opt => opt.MapFrom(src => src.Address.Street))
                 .ForMember(dist => dist.City, opt => opt.MapFrom(src => src.Address.City))
-                .ForMember(dist => dist.BuildingNumber, opt => opt.MapFrom(src => src.Address.BuildingNumber));
+                .ForMember(dist => dist.BuildingNumber, opt => opt.MapFrom(src => src.Address.BuildingNumber))
+                .ForMember(dist => dist.Specialty, opt => opt.MapFrom(src => src.Specialties));
 
             CreateMap<TrainerToUpdateViewModel, Trainer>()
             .ForMember(dest => dest.Name, opt => opt.Ignore())
+            .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.Specialty))
             .AfterMap((src, dest) =>
             {
                 dest.Address.BuildingNumber = src.BuildingNumber;

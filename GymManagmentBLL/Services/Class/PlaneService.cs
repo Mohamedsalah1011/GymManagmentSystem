@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using GymManagmentBLL.Services.interfaces;
 using GymManagmentBLL.ViewModels.PlanViewModel;
 using GymManagmentDAL.Entites;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymManagmentBLL.Services.Class
 {
-    internal class PlaneService : IPlanService
+    public class PlaneService : IPlanService
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
@@ -39,9 +39,9 @@ namespace GymManagmentBLL.Services.Class
 
         public UpdatePlanViewModel? GetPlanToUpdate(int PlanId)
         {
-           var plan = _unitOfWork.GetRepository<Plan>().GetById(PlanId);
-            if (plan is null || plan.IsActive == false || HasActiveMemberShip(PlanId)) return null;
-         
+            var plan = _unitOfWork.GetRepository<Plan>().GetById(PlanId);
+            if (plan is null || plan.IsActive == true || HasActiveMemberShip(PlanId)) return null;
+
             return _mapper.Map<Plan, UpdatePlanViewModel>(plan);
 
         }
@@ -52,7 +52,7 @@ namespace GymManagmentBLL.Services.Class
             {
                 var PlanRepo = _unitOfWork.GetRepository<Plan>();
                 var plan = PlanRepo.GetById(PlanId);
-                if (plan is null || HasActiveMemberShip(PlanId)) return false;
+                if (plan is null || plan.IsActive == true || HasActiveMemberShip(PlanId)) return false;
                 (plan.Description, plan.DurationDays, plan.Price, plan.UpdatedAt) =
                     (UpdatedPlan.Description, UpdatedPlan.DurationDays, UpdatedPlan.Price, DateTime.Now);
                 PlanRepo.Update(plan);
@@ -86,6 +86,11 @@ namespace GymManagmentBLL.Services.Class
         {
             return _unitOfWork.GetRepository<MemberShip>()
                 .GetAll(ms => ms.PlaneId == PlanId && ms.status =="Active").Any();
+        }
+
+        public PlaneViewModel? GetPlanById(int id)
+        {
+            return GetPlanDetials(id);
         }
         #endregion
     }

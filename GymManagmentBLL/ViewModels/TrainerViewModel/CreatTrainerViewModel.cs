@@ -1,4 +1,4 @@
-﻿using GymManagmentDAL.Entites.Enums;
+using GymManagmentDAL.Entites.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymManagmentBLL.ViewModels.TrainerViewModel
 {
-    internal class CreatTrainerViewModel
+    public class CreatTrainerViewModel
     {
         [Required(ErrorMessage = "Name Is Required")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Name Must Be Between 2 and 50 Char")]

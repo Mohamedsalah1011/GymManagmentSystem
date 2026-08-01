@@ -1,4 +1,4 @@
-﻿using GymManagmentDAL.Entites.Enums;
+using GymManagmentDAL.Entites.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymManagmentBLL.ViewModels.TrainerViewModel
 {
-    internal class TrainerToUpdateViewModel
+    public class TrainerToUpdateViewModel
     {
         public string Name { get; set; } = null!;
         [Required(ErrorMessage = "Email Is Required")]
